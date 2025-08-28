@@ -18,7 +18,7 @@ func meta() int32 {
 		AppID:       "plusev_planner",
 		Category:    "Import",
 		Description: "Imports economic calendar events from MQL5",
-		Author:      "PlusEV",
+		Author:      "trading-peter",
 		Version:     "1.0.0",
 		Repository:  "https://github.com/trading-peter/plusev_planner_economic_calendar_plugin",
 		Tags:        []string{},
