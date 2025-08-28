@@ -1,0 +1,4 @@
+github.com/extism/go-pdk v1.1.3 h1:hfViMPWrqjN6u67cIYRALZTZLk/enSPpNKa+rZ9X2SQ=
+github.com/extism/go-pdk v1.1.3/go.mod h1:Gz+LIU/YCKnKXhgge8yo5Yu1F/lbv7KtKFkiCSzW/P4=
+github.com/plusev-terminal/go-plugin-common v1.2.0 h1:ug3ask2nf5dK2OgebfUD0pLGVLZIPhOsuUIgAGqTb/g=
+github.com/plusev-terminal/go-plugin-common v1.2.0/go.mod h1:KbVc9h8GBFgZLS9JwNrFc8YLf1rgLWmhapZUfZXSIdM=

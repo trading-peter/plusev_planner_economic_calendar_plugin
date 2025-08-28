@@ -1,0 +1,17 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  build:
+    cmds:
+      - tinygo build -o plugin.wasm -target wasip1 -buildmode=c-shared .
+  release:
+    desc: Create a GitHub release and upload the compiled plugin.wasm (requires gh CLI or GITHUB_TOKEN)
+    deps: [build]
+    cmds:
+      - '[ -f plugin.wasm ] || (echo "plugin.wasm not found; run \"task build\" first" && exit 1)'
+      - 'command -v goreleaser >/dev/null 2>&1 || (echo "goreleaser is required: https://goreleaser.com/install" && exit 1)'
+      - '[ -n "${GITHUB_TOKEN:-}" ] || (echo "GITHUB_TOKEN required for goreleaser to publish releases" && exit 1)'
+      - 'goreleaser release --rm-dist'
+    

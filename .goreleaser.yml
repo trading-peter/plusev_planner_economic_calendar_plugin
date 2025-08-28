@@ -1,0 +1,10 @@
+project_name: plugin
+
+builds: []
+
+archives:
+  - id: wasm
+    format: zip
+    files:
+      - plugin.wasm
+    name_template: "{{ .ProjectName }}_{{ .Tag }}_wasm"
