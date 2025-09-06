@@ -6,3 +6,5 @@ require (
 	github.com/extism/go-pdk v1.1.3
 	github.com/plusev-terminal/go-plugin-common v1.2.0
 )
+
+replace github.com/plusev-terminal/go-plugin-common => ../plusev/go-plugin-common

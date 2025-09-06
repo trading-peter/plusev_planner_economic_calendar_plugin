@@ -9,9 +9,12 @@ import (
 	"github.com/plusev-terminal/go-plugin-common/logging"
 	pi "github.com/plusev-terminal/go-plugin-common/planner/import"
 	"github.com/plusev-terminal/go-plugin-common/requester"
+	rt "github.com/plusev-terminal/go-plugin-common/requester/types"
 
 	"github.com/extism/go-pdk"
 )
+
+var r *requester.Requester = requester.NewRequester()
 
 //go:wasmexport import_events
 func import_events() int32 {
@@ -32,7 +35,7 @@ func import_events() int32 {
 
 	queryStr := fmt.Sprintf("date_mode=1&from=%s&to=%s&importance=15&currencies=262143", url.QueryEscape(fromStr), url.QueryEscape(toStr))
 
-	req := requester.Request{
+	req := rt.Request{
 		Method: "POST",
 		URL:    "https://www.mql5.com/en/economic-calendar/content",
 		Body:   []byte(queryStr),
@@ -46,7 +49,7 @@ func import_events() int32 {
 		},
 	}
 
-	resp, err := requester.Send(&req, nil)
+	resp, err := r.Send(&req, nil)
 	if err != nil {
 		// Log the error with details
 		logger.ErrorWithData("Failed to send HTTP request", map[string]any{
