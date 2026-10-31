@@ -47,21 +47,27 @@ func (p *Mql5Plugin) GetMeta() m.Meta {
 		Tags:        []string{},
 		Contacts:    []m.AuthorContact{},
 		Resources: m.ResourceAccess{
-			AllowedNetworkTargets: []m.NetworkTargetRule{{Pattern: "https://www.mql5.com/en/economic-calendar/content/*"}},
-			FsWriteAccess:         nil,
+			AllowedNetworkTargets: []m.NetworkTargetRule{
+				{
+					Pattern: "https://www.mql5.com/en/economic-calendar/content/*",
+					// MQL5 (MetaQuotes) publishes no rate limits for the
+					// economic-calendar AJAX endpoint (checked 2026-10-31).
+					// This is a conservative courtesy rule, not a documented
+					// limit. Calendar page: https://www.mql5.com/en/economic-calendar
+					Limits: []m.RateLimitRule{
+						m.NewRateLimitRule("total", 1, time.Second).WithBurst(5),
+					},
+				},
+			},
+			FsWriteAccess: nil,
 		},
 	}
 }
 
 func (p *Mql5Plugin) GetRateLimits() []plugin.RateLimit {
-	return []plugin.RateLimit{
-		{
-			Command: planner.CMD_IMPORT_EVENTS,
-			Scope:   []plugin.RateLimitScope{plugin.RateLimitScopeIP},
-			RPS:     plugin.CalculateRPS(1, time.Minute),
-			Burst:   1,
-		},
-	}
+	// Empty on purpose: limits are declared on the manifest network target above;
+	// an explicit empty array opts out of the legacy per-command limiter.
+	return []plugin.RateLimit{}
 }
 
 // GetConfigFields returns the configuration fields needed by this plugin
